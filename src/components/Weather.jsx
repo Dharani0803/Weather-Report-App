@@ -157,7 +157,7 @@ function Weather(){
             <p className="text-[#024A70] text-lg mb-2">{desc}</p>
             </div>
 
-            <div className="flex gap-10">
+            <div className="flex gap-10 box-1">
             <div className=" flex items-center bg-[#F0F9FF] rounded-lg pl-10 p-2">   
             <div className="items-center justify-center">
             <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt="weather" className="w-20 h-20"/>
