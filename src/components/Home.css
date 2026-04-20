@@ -37,3 +37,74 @@
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in-out;
 }
+
+
+/* Tablet */
+@media (max-width: 768px) {
+  .home-main {
+    width: 90%;
+    margin-top: 40px;
+  }
+
+  .home-main h1{
+    font-size: 18px;
+  }
+
+  .con{
+    font-size: 14px;
+  }
+
+  .sub{
+    font-size: 16px;
+  }
+
+  .error{
+    margin-bottom: 10px;
+  }
+
+  .home-nav {
+    margin: 10px;
+    margin-top: 20px;
+  }
+
+  .home-nav h1{
+    font-size: 22px;
+  }
+
+  .btn{
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .features {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .main{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 20px;
+    margin-top: 30px;
+  }
+
+  .title{
+    font-size: 18px;
+  }
+
+  .container{
+    padding: 10px;
+  }
+  
+  .main-con{
+    padding: 5px;
+  }
+
+  .box-1{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+
+

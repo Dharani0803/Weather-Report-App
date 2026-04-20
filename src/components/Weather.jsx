@@ -113,47 +113,48 @@ function Weather(){
     return(
         <div className="home">
 
-            <nav className="bg-white my-10 mx-15 p-5 rounded-2xl">
+            <nav className="bg-white my-10 mx-15 p-5 rounded-2xl home-nav">
               <p className="text-[#0069A8] text-xs uppercase pb-1 font-semibold">live  weather</p>
               <h1 className="text-[#052F4A] text-3xl font-bold">Weather Verse Dashboard</h1>
-              <p className="text-[#024A70] text-sm mt-2">This weather app gives live city climate updates with a clean, responsive dashboard.</p>
+              <p className="con text-[#024A70] text-sm mt-2">This weather app gives live city climate updates with a clean, responsive dashboard.</p>
             </nav>
 
-            <main className="bg-white my-5 mx-15 p-10 rounded-2xl">
+            <main className="bg-white my-5 mx-15 p-10 rounded-2xl main">
                 <p className="text-[#0069A8] font text-xs uppercase pb-1 font-semibold">search city</p>
-                <h1 className="text-[#052F4A] text-2xl font-bold">Check Weather Instantly</h1>
-                <p className="text-[#024A70]">Enter a city name to view current temperature and key weather conditions.</p>
+                <h1 className="title text-[#052F4A] text-2xl font-bold">Check Weather Instantly</h1>
+                <p className="con text-[#024A70]">Enter a city name to view current temperature and key weather conditions.</p>
 
-                <div className="border border-gray-300 rounded p-5 mt-5" >
-                <h2 className="text-[#024A70] text-lg font-semibold mb-2">Search for a Weather Report</h2>
-                <input onChange={handleCity} className="border border-gray-300 p-2 rounded-lg w-[80%] mr-5 placeholder:text-sm placeholder:text-[#a3a3a4] focus:ring-1 focus:ring-blue-100 focus:outline-none" type="text" placeholder="Enter City Name  (e.g Ooty)">
+                <div className="border border-gray-300 rounded p-5 mt-5 container" >
+                <h2 className="sub text-[#024A70] text-lg font-semibold mb-2">Search for a Weather Report</h2>
+                <div className="flex gap-5 mb-5">
+                <input onChange={handleCity} className="flex-1 p-2 border border-gray-300 rounded-lg placeholder:text-sm placeholder:text-[#a3a3a4] focus:ring-1 focus:ring-blue-100 focus:outline-none" type="text" placeholder="Enter City Name  (e.g Ooty)">
                 </input>
-                <button onClick={getWeather} disabled={loading || !city.trim()} className="bg-[#286eca] hover:bg-[rgb(31,90,166)] p-2 rounded-lg text-white mb-5">
+                <button onClick={getWeather} disabled={loading || !city.trim()} className="btn bg-[#286eca] hover:bg-[rgb(31,90,166)] p-2 rounded-lg text-white">
                   {loading ? "Fetching weather..." : "Get Weather Report"}
-                </button>
+                </button></div>
 
     {error ? (
-      <div className="text-center text-red-500 font-semibold">
+      <div className="error text-center text-red-500 font-semibold">
         {error}
       </div>
     ): !hasData ? (
     <div>
       <p className="text-center text-5xl animate-bounce mt-10">☁️</p>
-      <p className="text-[#024A70] text-xl font-semibold text-center">
+      <p className="sub text-[#024A70] text-xl font-semibold text-center">
         No weather data yet
       </p>
-      <p className="text-[#024A70] text-center mb-12">
+      <p className="con text-[#024A70] text-center mb-12">
         Search for a city to view temperature, conditions, and atmospheric metrics in this dashboard.
       </p>
     </div>) :
     (
-      <div className="flex flex-col gap-10 px-5">
-        <div className="flex justify-between">
+      <div className="flex flex-col gap-10 px-5 main-con">
+        <div className="flex justify-between  box-1">
 
             <div>
             <p className="text-[#0069A8] text-xs uppercase pb-1 mt-5 mb-3 font-semibold">current conditions</p>
             <h1 className="text-[#052F4A] text-4xl mb-2 font-bold">{name}, {country}</h1>
-            <p className="text-[#024A70] text-lg">{desc}</p>
+            <p className="text-[#024A70] text-lg mb-2">{desc}</p>
             </div>
 
             <div className="flex gap-10">
@@ -168,8 +169,8 @@ function Weather(){
 
             <div className="bg-[#e7f4fd] border border-[#bcd5e7] backdrop-blur-md p-5 rounded-xl hover:scale-105 transition">
             <p className="text-[#0069A8] font-semibold text-left text-xs uppercase mb-4">Smart Weather Advisor</p>
-            <p className="text-[#024A70] mb-2">{getAdvice(Number(tempC), mainWeather)}</p>
-            <p className="text-[#024A70]">{getAlert(Number(tempC), wspeed, mainWeather)}</p>
+            <p className="con text-[#024A70] mb-2">{getAdvice(Number(tempC), mainWeather)}</p>
+            <p className="con text-[#024A70]">{getAlert(Number(tempC), wspeed, mainWeather)}</p>
             </div></div>
             </div>
 
