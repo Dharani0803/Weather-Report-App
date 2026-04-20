@@ -29,12 +29,12 @@ A modern React-based weather application that displays real-time weather informa
 
 ## 📁 Project Structure
 
-```bash
 src/
 ├── assets/
 ├── components/
 ├── App.jsx
 ├── Weather.jsx
+├── Home.jsx
 ├── Home.css
 └── main.jsx
 
@@ -42,37 +42,35 @@ src/
 
 ## ⚙️ How It Works
 
-- User enters a city name in the input field  
-- Clicks "Get Weather Report" button  
-- API request is sent to OpenWeather API  
-- Response data is stored using React state  
+- User enters city name  
+- Clicks search button  
+- API request sent to OpenWeather  
+- Data stored in React state  
 - UI updates automatically with weather details  
-- Displays city, temperature, and weather condition  
 
 ---
 
 ## 📸 Output
 
-- Shows city name 🌍  
-- Displays temperature in °C 🌡️  
-- Shows weather condition (Clear, Rain, Clouds, etc.) 🌤️  
-- Loading state while fetching data ⏳  
-- Error handling for invalid city ❌  
+- City name display  
+- Temperature in °C  
+- Weather condition  
+- Loading state while fetching  
+- Error handling for invalid city  
 
 ---
 
 ## 📱 Responsive Design
 
-- 💻 Desktop: Input and button displayed side-by-side  
-- 📱 Tablet: Adjusted spacing and medium layout  
-- 📱 Mobile:
-  - Input and button stacked vertically  
-  - Button takes full width  
-  - Optimized font size and spacing  
-- 🌐 Fully responsive across all devices  
+- Desktop: side-by-side layout  
+- Tablet: adjusted spacing  
+- Mobile: stacked layout with full-width button  
+- Works on all screen sizes  
 
 ---
 
 ## 👨‍💻 Author
 
-**Dharani K**
+Dharani K
+
+---
