@@ -1,4 +1,4 @@
-# 🌦️ Weather Verse Dashboard
+# 🌦️ Weather Verse App
 
 A modern React-based weather application that displays real-time weather information and a 5-day forecast using the OpenWeather API.
 
