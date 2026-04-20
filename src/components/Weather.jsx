@@ -126,7 +126,7 @@ function Weather(){
 
                 <div className="border border-gray-300 rounded p-5 mt-5 container" >
                 <h2 className="sub text-[#024A70] text-lg font-semibold mb-2">Search for a Weather Report</h2>
-                <div className="flex gap-5 mb-5">
+                <div className="input flex gap-5 mb-5">
                 <input onChange={handleCity} className="flex-1 p-2 border border-gray-300 rounded-lg placeholder:text-sm placeholder:text-[#a3a3a4] focus:ring-1 focus:ring-blue-100 focus:outline-none" type="text" placeholder="Enter City Name  (e.g Ooty)">
                 </input>
                 <button onClick={getWeather} disabled={loading || !city.trim()} className="btn bg-[#286eca] hover:bg-[rgb(31,90,166)] p-2 rounded-lg text-white">
