@@ -81,6 +81,11 @@
   .input{
     display: flex;
     flex-direction: row;
+    gap: 5px;
+  }
+
+  .input button{
+    width: 100%;
   }
 
   .features {
