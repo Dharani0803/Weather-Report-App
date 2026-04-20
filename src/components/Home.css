@@ -81,11 +81,10 @@
   .input{
     display: flex;
     flex-direction: row;
-  }
-
-  .input button{
+    gap: 5px;
     width: 100%;
   }
+
 
   .features {
     flex-wrap: wrap;
