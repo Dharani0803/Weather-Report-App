@@ -81,9 +81,7 @@
   .input{
     display: flex;
     flex-direction: row;
-
   }
-
 
   .features {
     flex-wrap: wrap;
