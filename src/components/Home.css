@@ -80,7 +80,7 @@
 
   .input{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
   }
 
   .features {
