@@ -2,15 +2,7 @@ import "./Home.css"
 import { useState } from "react"
 import axios from "axios"
 import { WiDaySunny } from "react-icons/wi"
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer
-} from "recharts";
+import {LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer} from "recharts";
 
 function Weather(){
     const [city,setcity] = useState("")
@@ -28,15 +20,29 @@ function Weather(){
     const [mainWeather, setMainWeather] = useState("");
     const [forecast, setForecast] = useState([]);
     const [hasData, setHasData] = useState(false);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    
 
 
     function handleCity(evt){
         setcity(evt.target.value)
+        setError("");
+        setHasData(false); 
     }
 
-    function getWeather(){
-        var weatherData = axios(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f0c1879a82c3c95090d6b265e3dfb0cc`)
-        weatherData.then(function(success){
+    function getWeather() {
+        if (!city.trim()) {
+          setError("Please enter a city name");
+          return;
+        }
+        setLoading(true);
+        setError("");
+
+        axios(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f0c1879a82c3c95090d6b265e3dfb0cc`
+        )
+          .then(function (success) {
             const data = success.data;
 
             setname(data.name);
@@ -50,27 +56,43 @@ function Weather(){
             setwdeg(data.wind.deg);
             setpressure(data.main.pressure);
             setMainWeather(data.weather[0].main);
+            setError("");
             getForecast();
             setHasData(true);
-        })
-    }
+          })
+          .catch(function (err) {
+            setError("⚠️ City not found or API failed. Try again.");
+            setHasData(false);
+            setForecast([]);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
 
     function getForecast() {
-    axios(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=f0c1879a82c3c95090d6b265e3dfb0cc`)
+      axios(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=f0c1879a82c3c95090d6b265e3dfb0cc`
+      )
     .then(res => {
       const list = res.data.list;
 
-      const dailyData = list.filter((item, index) => index % 8 === 0);
+      const dailyData = list.filter((_, index) => index % 8 === 0);
 
       const formatted = dailyData.map(item => ({
-        date: new Date(item.dt_txt).toLocaleDateString("en-IN", { weekday: "short" }),
+        date: new Date(item.dt_txt).toLocaleDateString("en-IN", {
+          weekday: "short"
+        }),
         temp: Math.round(item.main.temp - 273.15)
       }));
 
       setForecast(formatted);
       })
-      .catch(err => console.log(err));
-    }
+      .catch(() => {
+        setError("⚠️ Failed to load forecast data");
+        setForecast([]);
+      });
+  }
 
 
     function getAdvice(temp, weather) {
@@ -83,7 +105,7 @@ function Weather(){
 
     function getAlert(temp, wind, weather) {
         if (temp > 40) return "⚠️ Heat Alert";
-        if (wind > 50) return "⚠️ Strong Wind";
+        if (wind > 10) return "⚠️ Strong Wind";
         if (weather === "Rain") return "⚠️ Heavy Rain Expected";
         return"😊 No alerts! you're safe to go :)";
     }
@@ -94,31 +116,38 @@ function Weather(){
             <nav className="bg-white my-10 mx-15 p-5 rounded-2xl">
               <p className="text-[#0069A8] text-xs uppercase pb-1 font-semibold">live  weather</p>
               <h1 className="text-[#052F4A] text-3xl font-bold">Weather Verse Dashboard</h1>
+              <p className="text-[#024A70] text-sm mt-2">This weather app gives live city climate updates with a clean, responsive dashboard.</p>
             </nav>
 
             <main className="bg-white my-5 mx-15 p-10 rounded-2xl">
                 <p className="text-[#0069A8] font text-xs uppercase pb-1 font-semibold">search city</p>
-                <h1 className="text-[#052F4A] text-2xl font-semibold">Check Weather Instantly</h1>
+                <h1 className="text-[#052F4A] text-2xl font-bold">Check Weather Instantly</h1>
                 <p className="text-[#024A70]">Enter a city name to view current temperature and key weather conditions.</p>
 
-                <div className="border border-gray-300 rounded p-7 mt-5" >
-                <h2 className="text-[#024A70] font-semibold mb-2">Search for a Weather Report</h2>
-                <input onChange={handleCity} className="border border-gray-300 p-2 rounded-lg w-[80%] mr-5 placeholder:text-sm placeholder:text-[#a3a3a4] focus:shadow-[#bce1fc] focus:shadow-xs focus:border-[#bce1fc] focus:outline-none" type="text" placeholder="Enter City Name  (e.g Ooty)"></input>
-                <button onClick={getWeather} className="bg-[#286eca] hover:bg-[rgb(31,90,166)] p-2 rounded-lg text-white mb-10">Get Weather Report</button>
+                <div className="border border-gray-300 rounded p-5 mt-5" >
+                <h2 className="text-[#024A70] text-lg font-semibold mb-2">Search for a Weather Report</h2>
+                <input onChange={handleCity} className="border border-gray-300 p-2 rounded-lg w-[80%] mr-5 placeholder:text-sm placeholder:text-[#a3a3a4] focus:ring-1 focus:ring-blue-100 focus:outline-none" type="text" placeholder="Enter City Name  (e.g Ooty)">
+                </input>
+                <button onClick={getWeather} disabled={loading || !city.trim()} className="bg-[#286eca] hover:bg-[rgb(31,90,166)] p-2 rounded-lg text-white mb-5">
+                  {loading ? "Fetching weather..." : "Get Weather Report"}
+                </button>
 
-    {!hasData ? (
-        <div>
-          <p className="text-center text-5xl">☁️</p>
-          <p className="text-[#024A70] text-xl font-semibold text-center">
-            No weather data yet
-          </p>
-          <p className="text-[#024A70] text-center mb-10">
-            Search for a city to view temperature, conditions, and atmospheric metrics in this dashboard.
-          </p>
-        </div>) : 
-        
-        (
-        <div className="flex flex-col gap-10 px-5">
+    {error ? (
+      <div className="text-center text-red-500 font-semibold">
+        {error}
+      </div>
+    ): !hasData ? (
+    <div>
+      <p className="text-center text-5xl animate-bounce mt-10">☁️</p>
+      <p className="text-[#024A70] text-xl font-semibold text-center">
+        No weather data yet
+      </p>
+      <p className="text-[#024A70] text-center mb-12">
+        Search for a city to view temperature, conditions, and atmospheric metrics in this dashboard.
+      </p>
+    </div>) :
+    (
+      <div className="flex flex-col gap-10 px-5">
         <div className="flex justify-between">
 
             <div>
@@ -138,9 +167,9 @@ function Weather(){
             </div>
 
             <div className="bg-[#e7f4fd] border border-[#bcd5e7] backdrop-blur-md p-5 rounded-xl hover:scale-105 transition">
-            <p className="text-[#0069A8] font-semibold text-left text-xm uppercase mb-4">Smart Weather Advisor</p>
-            <p className="text-[#024A70] text-center mb-2">{getAdvice(Number(tempC), mainWeather)}</p>
-            <p className="text-[#024A70] text-center">{getAlert(Number(tempC), wspeed, mainWeather)}</p>
+            <p className="text-[#0069A8] font-semibold text-left text-xs uppercase mb-4">Smart Weather Advisor</p>
+            <p className="text-[#024A70] mb-2">{getAdvice(Number(tempC), mainWeather)}</p>
+            <p className="text-[#024A70]">{getAlert(Number(tempC), wspeed, mainWeather)}</p>
             </div></div>
             </div>
 
@@ -167,7 +196,7 @@ function Weather(){
             </div>
             </div>
 
-      <div className=" bg-[#e7f4fd] p-5 rounded-xl border border-[#bcd5e7]">
+        <div className=" bg-[#e7f4fd] p-5 rounded-xl border border-[#bcd5e7]">
 
         <h2 className="text-[#052F4A] text-xl font-semibold mb-5">
           5-Day Temperature Trend
